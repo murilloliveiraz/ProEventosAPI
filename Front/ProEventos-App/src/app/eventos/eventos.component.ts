@@ -7,8 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./eventos.component.scss']
 })
 export class EventosComponent implements OnInit {
+  exibirImagem : boolean = true;
+  public eventos: any = [];
+  public eventosFiltrados: any = [];
+  private _filtroLista: string = '';
 
-  public eventos: any;
+  public get filtroLista(){
+    return this._filtroLista;
+  }
+
+  public set filtroLista(value: string){
+    this._filtroLista = value;
+    this.eventosFiltrados = this._filtroLista ? this.filtrarEventos(this._filtroLista) : this.eventos;
+  }
+
+  filtrarEventos(filtrarPor : string): any{
+    filtrarPor = filtrarPor.toLocaleLowerCase();
+    return this.eventos.filter(
+      (evento: { tema: string; }) => evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+    )
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -16,9 +34,13 @@ export class EventosComponent implements OnInit {
     this.getEventos();
   }
 
+  alterarImagem(){
+    this.exibirImagem = !this.exibirImagem;
+  }
+
   public getEventos(): void {
     this.http.get('https://localhost:5001/api/eventos').subscribe(
-      response => this.eventos = response
+      response => {this.eventos = response, this.eventosFiltrados = response}
     );
   }
 

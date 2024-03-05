@@ -13,6 +13,5 @@ namespace ProEventos.Domain
         public string Email { get; set; }
         public IEnumerable<RedeSocial> RedesSociais { get; set; }
         public IEnumerable<PalestranteEvento> PalestrantesEventos { get; set; }
-
     }
 }

@@ -15,9 +15,10 @@
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
-      <th>#</th>
-      <th><button type="button" class="btn btn-secondary" (click)="alterarImagem()">{{exibirImagem ? 'Ocultar' : 'Exibir'}}</button></th>
+      <th><button type="button" class="btn btn-secondary" (click)="alterarImagem()">
+        <i class="{{!exibirImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>{{exibirImagem ? ' Ocultar' : ' Exibir'}}</button></th>
       <th>Tema</th>
+      <th>#</th>
       <th>Local</th>
       <th>Data</th>
       <th>Qtd. Pessoas</th>
@@ -27,15 +28,18 @@
   </thead>
   <tbody *ngIf="eventos && eventos.length">
     <tr *ngFor="let evento of eventosFiltrados">
-      <td>{{evento.eventoId}}</td>
       <td><img [collapse]="!exibirImagem" [isAnimated]="true"src="/assets/{{evento.imagemURL}}" [style.width.px]="100" [style.margin.px]="2" alt={{evento.tema}}></td>
+      <td>{{evento.id}}</td>
       <td>{{evento.tema}}</td>
       <td>{{evento.local}}</td>
-      <td>{{evento.dataEvento}}</td>
+      <td>{{evento.dataEvento | DateFormatPipe}}</td>
       <td>{{evento.qtdPessoas}}</td>
-      <td>{{evento.lote}}</td>
+      <td>{{evento.lote[0].nome | uppercase}}</td>
       <td>
-        <button type="button" class="btn btn-primary btn-sm mr-2">Editar</button><button type="button" class="btn btn-danger btn-sm">Excluir</button>
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary btn-sm mr-2" data-bs-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i> </button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="openModal(template)" data-bs-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></button>
+        </div>
       </td>
     </tr>
   </tbody>
@@ -47,3 +51,11 @@
     </tr>
   </tfoot>
 </table>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que quer excluir esse evento?</p>
+    <button type="button" class="btn btn-default" (click)="decline()" >Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="confirm()" >Excluir</button>
+  </div>
+</ng-template>

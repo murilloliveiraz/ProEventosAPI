@@ -12,7 +12,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ToastrModule } from 'ngx-toastr';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { EventoService } from './services/evento.service';
 
@@ -53,6 +53,7 @@ import { TituloComponent } from './shared/titulo/titulo.component';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
     BsDropdownModule.forRoot(),

@@ -81,36 +81,22 @@ namespace ProEventos.Application
             }
         } 
 
-        public async Task<EventoDto[]> GetAllEventosAsync(bool includePalestrantes = false)
-        {
-            try
+         public async Task<EventoDto[]> GetAllEventosAsync(bool includePalestrantes = false)
             {
-                var eventos = await _eventoPersist.GetAllEventosAsync(includePalestrantes);
-                if ( eventos == null) return null;
+                try
+                {
+                    var eventos = await _eventoPersist.GetAllEventosAsync(includePalestrantes);
+                    if (eventos == null) return null;
 
-                var eventosRetorno = new List<EventoDto>();
+                    var resultado = _mapper.Map<EventoDto[]>(eventos);
 
-                foreach(var evento in eventos){
-                    eventosRetorno.Add(new EventoDto(){
-                        Id = evento.Id,
-                        Local = evento.Local,
-                        DataEvento = evento.DataEvento.ToString(),
-                        Tema = evento.Tema,
-                        QtdPessoas = evento.QtdPessoas,
-                        ImagemURL = evento.ImagemURL,
-                        Telefone = evento.Telefone,
-                        Email = evento.Email,
-                    });
+                    return resultado;
                 }
-
-                var resultado = _mapper.Map<EventoDto[]>(eventos);
-                return resultado;
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
 
         public async Task<EventoDto> GetEventoByIdAsync(int eventoId, bool includePalestrantes = false)
         {

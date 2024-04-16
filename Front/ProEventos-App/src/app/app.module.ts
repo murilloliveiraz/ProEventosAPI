@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import localePT from '@angular/common/locales/pt';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,8 +10,12 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ToastrModule } from 'ngx-toastr';
+
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
@@ -29,7 +34,8 @@ import { RegistrationComponent } from './components/user/registration/registrati
 import { UserComponent } from './components/user/user.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
-
+import { LoteService } from './services/lote.service';
+defineLocale('pt-br', ptBrLocale);
 @NgModule({
   declarations: [
       AppComponent,
@@ -64,9 +70,13 @@ import { TituloComponent } from './shared/titulo/titulo.component';
       preventDuplicates: true,
       progressBar: true,
     }),
+    BsDatepickerModule.forRoot(),
     NgxSpinnerModule,
   ],
-  providers: [EventoService],
+  providers: [
+    EventoService,
+    LoteService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

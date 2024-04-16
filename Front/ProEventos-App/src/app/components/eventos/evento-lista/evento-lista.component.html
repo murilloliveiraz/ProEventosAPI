@@ -40,12 +40,12 @@
       <td>{{evento.id}}</td>
       <td>{{evento.tema}}</td>
       <td class="d-none d-md-table-cell">{{evento.local}}</td>
-      <td>{{evento.dataEvento | DateFormatPipe}}</td>
+      <td>{{evento.dataEvento}}</td>
       <td class="d-none d-md-table-cell">{{evento.qtdPessoas}}</td>
-      <td class="d-none d-md-table-cell">{{evento.lote[0].nome | uppercase}}</td>
+      <td class="d-none d-md-table-cell">{{evento.lote[0]?.nome | uppercase}}</td>
       <td>
         <div class="btn-group">
-          <button type="button" class="btn btn-danger btn-lg" (click)="openModal(template)" data-bs-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></button>
+          <button type="button" class="btn btn-danger btn-lg" (click)="openModal($event, template, evento.id)" data-bs-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></button>
         </div>
       </td>
     </tr>
@@ -61,7 +61,7 @@
 </div>
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Tem certeza que quer excluir esse evento?</p>
+    <p>Tem certeza que quer excluir o evento {{eventoId}}?</p>
     <button type="button" class="btn btn-default" (click)="decline()" >Cancelar</button>
     <button type="button" class="btn btn-danger" (click)="confirm()" >Excluir</button>
   </div>
